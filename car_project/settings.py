@@ -70,8 +70,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'car_project.wsgi.application'
 
+# Added this "setting" to return decimals as integers (Default Django returns decimals as strings) 
 REST_FRAMEWORK = {
-    'COERCE_DECIMAL_TO_STRING': False
+    'COERCE_DECIMAL_TO_STRING': False  
 }
 
 # Password validation

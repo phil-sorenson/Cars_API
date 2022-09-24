@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import CarSerializer
 from .models import Car
+from rest_framework import status
 # # Where we will define all of the functions that the outside world can interact with through URLs over internet
 # Create your views here.
 
@@ -16,8 +17,8 @@ def cars_list(request):
     
     elif request.method == 'POST':
         serializer = CarSerializer(data = request.data)
-        if serializer.is_valid() == True:               # <--- Code to validate the request coming in via Postman or Frontend 
-            serializer.save()   # QUESTION -- What is the purpose of the .save() function and WHY our own status codes??
-            return Response(serializer.data, status=201) 
-        else:
-            return Response(serializer.errors, status=400)   # <--- setting our own 'Status Code' 
+        serializer.is_valid(raise_exception=True)  # <--- Code to validate the request coming in via Postman or frontend
+        serializer.save()   
+    return Response(serializer.data, status=status.HTTP_201_CREATED) 
+
+        
