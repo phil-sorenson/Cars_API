@@ -34,7 +34,7 @@ def cars_list(request):
     
 # How to cut down on code for the above function ---> car = get_object_or_404(Car, pk=pk)
 
-@api_view(['GET', 'PUT'])   # PUT == Update
+@api_view(['GET', 'PUT', 'DELETE'])   # PUT == Update
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     if request.method == 'GET':
@@ -45,3 +45,7 @@ def car_detail(request, pk):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        car.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
